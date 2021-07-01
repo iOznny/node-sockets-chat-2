@@ -24,6 +24,7 @@ io.on('connection', (client) => {
     });
 
     client.on('createMSG', (data) => {
+        let person = users.getPersons(client.id);
         let message = createMSG(data.name, data.message);
         client.broadcast.emit('createMSG', message);
     });
