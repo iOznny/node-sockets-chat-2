@@ -1,8 +1,6 @@
 const { io } = require('../server');
 
-
 io.on('connection', (client) => {
-
     console.log('Usuario conectado');
 
     client.emit('enviarMensaje', {
@@ -10,19 +8,14 @@ io.on('connection', (client) => {
         mensaje: 'Bienvenido a esta aplicación'
     });
 
-
-
     client.on('disconnect', () => {
         console.log('Usuario desconectado');
     });
 
     // Escuchar el cliente
     client.on('enviarMensaje', (data, callback) => {
-
         console.log(data);
-
         client.broadcast.emit('enviarMensaje', data);
-
 
         // if (mensaje.usuario) {
         //     callback({
@@ -34,9 +27,6 @@ io.on('connection', (client) => {
         //         resp: 'TODO SALIO MAL!!!!!!!!'
         //     });
         // }
-
-
-
     });
 
 });

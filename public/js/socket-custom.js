@@ -6,11 +6,8 @@ socket.on('connect', function() {
 
 // escuchar
 socket.on('disconnect', function() {
-
     console.log('Perdimos conexión con el servidor');
-
 });
-
 
 // Enviar información
 socket.emit('enviarMensaje', {
@@ -22,7 +19,5 @@ socket.emit('enviarMensaje', {
 
 // Escuchar información
 socket.on('enviarMensaje', function(mensaje) {
-
     console.log('Servidor:', mensaje);
-
 });
