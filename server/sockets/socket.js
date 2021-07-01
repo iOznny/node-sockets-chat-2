@@ -1,32 +1,35 @@
 const { io } = require('../server');
+const { Users } = require('../classes/users');
+const { createMSG } = require('../utils/utils');
+
+// Inicialización de los objetos.
+const users = new Users();
 
 io.on('connection', (client) => {
-    console.log('Usuario conectado');
 
-    client.emit('enviarMensaje', {
-        usuario: 'Administrador',
-        mensaje: 'Bienvenido a esta aplicación'
+    client.on('enterChat', (data, callback) => {
+        if (!data.name) {
+            return callback({
+                code: false,
+                message: 'El nombre es necesario.'
+            });
+        }
+
+        let persons = users.addPerson(client.id, data.name);
+
+        // Person entra o sale del chat.
+        client.broadcast.emit('listPersons', users.getPersons());
+
+        callback(persons);
     });
 
     client.on('disconnect', () => {
-        console.log('Usuario desconectado');
-    });
+        let person = users.deletePerson(client.id);
 
-    // Escuchar el cliente
-    client.on('enviarMensaje', (data, callback) => {
-        console.log(data);
-        client.broadcast.emit('enviarMensaje', data);
-
-        // if (mensaje.usuario) {
-        //     callback({
-        //         resp: 'TODO SALIO BIEN!'
-        //     });
-
-        // } else {
-        //     callback({
-        //         resp: 'TODO SALIO MAL!!!!!!!!'
-        //     });
-        // }
+        client.broadcast.emit('createMSG', createMSG('Administrador', `El usuario ${ person.name } salio del chat.`));
+        
+        // Person entra o sale del chat.
+        client.broadcast.emit('listPersons', users.getPersons());
     });
 
 });
