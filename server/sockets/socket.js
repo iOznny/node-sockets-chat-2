@@ -23,6 +23,11 @@ io.on('connection', (client) => {
         callback(persons);
     });
 
+    client.on('createMSG', (data) => {
+        let message = createMSG(data.name, data.message);
+        client.broadcast.emit('createMSG', message);
+    });
+
     client.on('disconnect', () => {
         let person = users.deletePerson(client.id);
 
