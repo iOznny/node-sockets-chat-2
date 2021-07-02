@@ -11,7 +11,7 @@ class Users {
     }
 
     // Obtener una persona por id.
-    getpersonById(id) {
+    getPersonById(id) {
         let person = this.persons.filter(person => person.id === id)[0];
         return person;
     }
@@ -26,7 +26,7 @@ class Users {
 
     // Eliminar persona.
     deletePerson(id) {
-        let personDelete = this.getpersonById(id);
+        let personDelete = this.getPersonById(id);
         this.persons = this.persons.filter(person => person.id != id);
 
         return personDelete;

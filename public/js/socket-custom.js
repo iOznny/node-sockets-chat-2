@@ -42,3 +42,8 @@ socket.on('createMSG', function(message) {
 socket.on('listPersons', function(persons) {
     console.log(persons);
 });
+
+// Mensajes privados
+socket.on('privateMSG', function(message) {
+    console.log('Mensaje Privado:', message);
+});

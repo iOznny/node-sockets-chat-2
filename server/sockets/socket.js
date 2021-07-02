@@ -25,7 +25,7 @@ io.on('connection', (client) => {
 
     client.on('createMSG', (data) => {
         let person = users.getPersons(client.id);
-        let message = createMSG(data.name, data.message);
+        let message = createMSG(person.name, data.message);
         client.broadcast.emit('createMSG', message);
     });
 
@@ -36,6 +36,12 @@ io.on('connection', (client) => {
         
         // Person entra o sale del chat.
         client.broadcast.emit('listPersons', users.getPersons());
+    });
+
+    // Mensajes privados
+    client.on('privateMSG', data => {
+        let person = users.getPersonById(client.id);
+        client.broadcast.to(data.for).emit('privateMSG', createMSG(person.name, data.message));
     });
 
 });
