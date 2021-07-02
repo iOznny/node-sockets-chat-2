@@ -1,8 +1,6 @@
 var params = new URLSearchParams(window.location.search);
-
 var nombre = params.get('nombre');
 var sala = params.get('sala');
-
 
 // referencias de jQuery
 var divUsuarios = $('#divUsuarios');
@@ -22,7 +20,6 @@ function renderizarUsuarios(persons) {
     html += '</li>';
 
     for (var i = 0; i < persons.length; i++) {
-
         html += '<li>';
         html += '    <a data-id="' + persons[i].id + '"  href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>' + personas[i].nombre + ' <small class="text-success">online</small></span></a>';
         html += '</li>';
@@ -50,9 +47,7 @@ function renderizarMensajes(mensaje, yo) {
         html += '    <div class="chat-img"><img src="assets/images/users/5.jpg" alt="user" /></div>';
         html += '    <div class="chat-time">' + hora + '</div>';
         html += '</li>';
-
     } else {
-
         html += '<li class="animated fadeIn">';
 
         if (mensaje.nombre !== 'Administrador') {
@@ -65,14 +60,12 @@ function renderizarMensajes(mensaje, yo) {
         html += '    </div>';
         html += '    <div class="chat-time">' + hora + '</div>';
         html += '</li>';
-
     }
 
     divChatbox.append(html);
 }
 
 function scrollBottom() {
-
     // selectors
     var newMessage = divChatbox.children('li:last-child');
 
@@ -88,18 +81,13 @@ function scrollBottom() {
     }
 }
 
-
-
-
 // Listeners
 divUsuarios.on('click', 'a', function() {
-
     var id = $(this).data('id');
 
     if (id) {
         console.log(id);
     }
-
 });
 
 formEnviar.on('submit', function(e) {
