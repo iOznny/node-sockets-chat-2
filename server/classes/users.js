@@ -4,8 +4,8 @@ class Users {
     }
 
     // Agregar persona
-    addPerson(id, name) {
-        let person = { id, name };
+    addPerson(id, name, room) {
+        let person = { id, name, room };
         this.persons.push(person);
         return this.persons;
     }
@@ -22,7 +22,10 @@ class Users {
     }
 
     // Obtener personas por sala.
-    getPersonsByRoom(room) {}
+    getPersonsByRoom(room) {
+        let personsByRoom = this.persons.filter(person => person.room == room);
+        return personsByRoom;
+    }
 
     // Eliminar persona.
     deletePerson(id) {

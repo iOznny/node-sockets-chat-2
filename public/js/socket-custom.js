@@ -3,13 +3,14 @@ var socket = io();
 // Obtener nombre de user por URL
 var params = new URLSearchParams(window.location.search);
 
-if (!params.has('name')) {
+if (!params.has('name') || !params.has('room')) {
     window.location = 'index.html';
-    throw new Error('Nombre necesario') ;
+    throw new Error('El nombre y sala son necesarios.') ;
 }
 
 var user = {
-    name: params.get('name')
+    name: params.get('name'),
+    room: params.get('room')
 };
 
 // Conexión entrante
