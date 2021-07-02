@@ -8,34 +8,40 @@ const users = new Users();
 io.on('connection', (client) => {
 
     client.on('enterChat', (data, callback) => {
-        if (!data.name) {
+        console.log(data);
+
+        if (!data.name || !data.room) {
             return callback({
                 code: false,
-                message: 'El nombre es necesario.'
+                message: 'El nombre y sala son necesarios.'
             });
         }
 
-        let persons = users.addPerson(client.id, data.name);
+        client.join(data.room);
+
+        users.addPerson(client.id, data.name, data.room);
 
         // Person entra o sale del chat.
-        client.broadcast.emit('listPersons', users.getPersons());
+        client.broadcast.to(data.room).emit('listPersons', users.getPersonsByRoom(data.room));
 
-        callback(persons);
+        callback(users.getPersonsByRoom(data.room));
     });
 
-    client.on('createMSG', (data) => {
+    client.on('createMSG', (data, callback) => {
         let person = users.getPersons(client.id);
         let message = createMSG(person.name, data.message);
-        client.broadcast.emit('createMSG', message);
+
+        client.broadcast.to(person.room).emit('createMSG', message);
+        callback(message);
     });
 
     client.on('disconnect', () => {
         let person = users.deletePerson(client.id);
 
-        client.broadcast.emit('createMSG', createMSG('Administrador', `El usuario ${ person.name } salio del chat.`));
+        client.broadcast.to(person.room).emit('createMSG', createMSG('Administrador', `El usuario ${ person.name } salio del chat.`));
         
         // Person entra o sale del chat.
-        client.broadcast.emit('listPersons', users.getPersons());
+        client.broadcast.to(person.room).emit('listPersons', users.getPersonsByRoom(person.room));
     });
 
     // Mensajes privados
