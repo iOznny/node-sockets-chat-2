@@ -31,9 +31,7 @@ function renderizarUsuarios(persons) {
     divUsuarios.html(html);
 }
 
-
 function renderizarMensajes(mensaje, yo) {
-
     var html = '';
     var fecha = new Date(mensaje.fecha);
     var hora = fecha.getHours() + ':' + fecha.getMinutes();
@@ -70,9 +68,7 @@ function renderizarMensajes(mensaje, yo) {
 
     }
 
-
     divChatbox.append(html);
-
 }
 
 function scrollBottom() {
