@@ -1,6 +1,6 @@
 var params = new URLSearchParams(window.location.search);
-var nombre = params.get('nombre');
-var sala = params.get('sala');
+var name = params.get('name');
+var room = params.get('room');
 
 // referencias de jQuery
 var divUsuarios = $('#divUsuarios');
@@ -8,57 +8,54 @@ var formEnviar = $('#formEnviar');
 var txtMensaje = $('#txtMensaje');
 var divChatbox = $('#divChatbox');
 
-
 // Funciones para renderizar usuarios
 function renderizarUsuarios(persons) {
-    console.log(persons);
-
     var html = '';
 
     html += '<li>';
     html += '    <a href="javascript:void(0)" class="active"> Chat de <span> ' + params.get('room') + '</span></a>';
     html += '</li>';
 
-    for (var i = 0; i < persons.length; i++) {
+    for (var i=0; i<persons.length; i++) {
         html += '<li>';
-        html += '    <a data-id="' + persons[i].id + '"  href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>' + personas[i].nombre + ' <small class="text-success">online</small></span></a>';
+        html += '    <a data-id="' + persons[i].id + '"  href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>' + personas[i].name + ' <small class="text-success">online</small></span></a>';
         html += '</li>';
     }
 
     divUsuarios.html(html);
 }
 
-function renderizarMensajes(mensaje, yo) {
+function renderizarMensajes(message, me) {
     var html = '';
-    var fecha = new Date(mensaje.fecha);
-    var hora = fecha.getHours() + ':' + fecha.getMinutes();
+    var date = new Date(message.date);
+    var hour = date.getHours() + ':' + date.getMinutes();
 
     var adminClass = 'info';
-    if (mensaje.nombre === 'Administrador') {
+    if (message.name === 'Administrador') {
         adminClass = 'danger';
     }
 
-    if (yo) {
+    if (me) {
         html += '<li class="reverse">';
         html += '    <div class="chat-content">';
-        html += '        <h5>' + mensaje.nombre + '</h5>';
-        html += '        <div class="box bg-light-inverse">' + mensaje.mensaje + '</div>';
+        html += '        <h5>' + message.name + '</h5>';
+        html += '        <div class="box bg-light-inverse">' + message.message + '</div>';
         html += '    </div>';
         html += '    <div class="chat-img"><img src="assets/images/users/5.jpg" alt="user" /></div>';
-        html += '    <div class="chat-time">' + hora + '</div>';
+        html += '    <div class="chat-time">' + hour + '</div>';
         html += '</li>';
     } else {
         html += '<li class="animated fadeIn">';
 
-        if (mensaje.nombre !== 'Administrador') {
+        if (message.name !== 'Administrador') {
             html += '    <div class="chat-img"><img src="assets/images/users/1.jpg" alt="user" /></div>';
         }
 
         html += '    <div class="chat-content">';
-        html += '        <h5>' + mensaje.nombre + '</h5>';
-        html += '        <div class="box bg-light-' + adminClass + '">' + mensaje.mensaje + '</div>';
+        html += '        <h5>' + message.name + '</h5>';
+        html += '        <div class="box bg-light-' + adminClass + '">' + message.message + '</div>';
         html += '    </div>';
-        html += '    <div class="chat-time">' + hora + '</div>';
+        html += '    <div class="chat-time">' + hour + '</div>';
         html += '</li>';
     }
 
@@ -91,7 +88,6 @@ divUsuarios.on('click', 'a', function() {
 });
 
 formEnviar.on('submit', function(e) {
-
     e.preventDefault();
 
     if (txtMensaje.val().trim().length === 0) {
@@ -99,13 +95,11 @@ formEnviar.on('submit', function(e) {
     }
 
     socket.emit('crearMensaje', {
-        nombre: nombre,
+        name: name,
         mensaje: txtMensaje.val()
-    }, function(mensaje) {
+    }, function(message) {
         txtMensaje.val('').focus();
-        renderizarMensajes(mensaje, true);
+        renderizarMensajes(message, true);
         scrollBottom();
     });
-
-
 });
