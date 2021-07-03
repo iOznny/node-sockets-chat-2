@@ -8,8 +8,6 @@ const users = new Users();
 io.on('connection', (client) => {
 
     client.on('enterChat', (data, callback) => {
-        console.log(data);
-
         if (!data.name || !data.room) {
             return callback({
                 code: false,
