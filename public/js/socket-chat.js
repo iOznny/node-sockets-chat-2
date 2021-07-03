@@ -1,5 +1,5 @@
 var params = new URLSearchParams(window.location.search);
-var named = params.get('name');
+var name = params.get('name');
 var room = params.get('room');
 
 // Referencias de jQuery
@@ -95,12 +95,11 @@ formSend.on('submit', function(e) {
     }
 
     socket.emit('createMSG', {
-        name: named,
+        name: name,
         message: txtMessage.val()
     }, function(res) {
-        /* txtMessage.val('').focus();
-        renderizarMensajes(message, true);
-        scrollBottom(); */
-        console.log(res);
+        txtMessage.val('').focus();
+        renderizarMensajes(res, true);
+        scrollBottom();
     });
 });
