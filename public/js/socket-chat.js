@@ -28,7 +28,8 @@ function renderizarUsuarios(persons) {
 function renderizarMensajes(message, me) {
     var html = '';
     var date = new Date(message.date);
-    var hour = date.getHours() + ':' + date.getMinutes();
+    var format = (date.getHours() % 12 <= 12) ? " p.m." : " a.m.";
+    var hour = date.getHours() % 12 + ':' + date.getMinutes() + format;
 
     var adminClass = 'info';
     if (message.name === 'Administrador') {
