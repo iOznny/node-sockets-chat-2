@@ -23,6 +23,7 @@ io.on('connection', (client) => {
 
         // Person entra o sale del chat.
         client.broadcast.to(data.room).emit('listPersons', users.getPersonsByRoom(data.room));
+        client.broadcast.to(data.room).emit('createMSG', createMSG('Administrador', `${ data.name } se unió`));
 
         callback(users.getPersonsByRoom(data.room));
     });
