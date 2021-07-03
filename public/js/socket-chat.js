@@ -1,16 +1,15 @@
 var params = new URLSearchParams(window.location.search);
-var name = params.get('name');
+var named = params.get('name');
 var room = params.get('room');
 
 // Referencias de jQuery
 var divUsuarios = $('#divUsuarios');
-var formEnviar = $('#formEnviar');
-var txtMensaje = $('#txtMensaje');
+var formSend = $('#formSendMessages');
+var txtMessage = $('#txtMessage');
 var divChatbox = $('#divChatbox');
 
 // Funciones para renderizar usuarios
 function renderizarUsuarios(persons) {
-    console.log(persons);
     var html = '';
 
     html += '<li>';
@@ -79,7 +78,7 @@ function scrollBottom() {
     }
 }
 
-// Listeners
+// Listeners de ID del user.
 divUsuarios.on('click', 'a', function() {
     var id = $(this).data('id');
 
@@ -88,19 +87,20 @@ divUsuarios.on('click', 'a', function() {
     }
 });
 
-formEnviar.on('submit', function(e) {
+formSend.on('submit', function(e) {
     e.preventDefault();
 
-    if (txtMensaje.val().trim().length === 0) {
+    if (txtMessage.val().trim().length === 0) {
         return;
     }
 
     socket.emit('createMSG', {
-        name: name,
-        mensaje: txtMensaje.val()
-    }, function(message) {
-        txtMensaje.val('').focus();
+        name: named,
+        message: txtMessage.val()
+    }, function(res) {
+        /* txtMessage.val('').focus();
         renderizarMensajes(message, true);
-        scrollBottom();
+        scrollBottom(); */
+        console.log(res);
     });
 });
