@@ -20,11 +20,8 @@
     </head>
 
     <body class="fix-header single-column card-no-border fix-sidebar">
-        <!-- ============================================================== -->
         <!-- Main wrapper -->
-        <!-- ============================================================== -->
         <div id="main-wrapper">
-
             <!-- ============================================================== -->
             <!-- Page wrapper  -->
             <!-- ============================================================== -->
@@ -140,15 +137,19 @@
                                                 </li>
                                             </ul>
                                         </div>
+
                                         <div class="card-body b-t">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <textarea placeholder="Escribe tu mensaje aquí" class="form-control b-0"></textarea>
+                                            <form id="formSendMessages">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <input placeholder="Escribe tu mensaje aquí" class="form-control b-0" id="txtMessage" autocomplete="off" autofocus>
+                                                    </div>
+    
+                                                    <div class="col-4 text-right">
+                                                        <button type="submit" class="btn btn-info btn-circle btn-lg"><i class="fa fa-paper-plane-o"></i> </button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-4 text-right">
-                                                    <button type="button" class="btn btn-info btn-circle btn-lg"><i class="fa fa-paper-plane-o"></i> </button>
-                                                </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                     <!-- .chat-right-panel -->
@@ -181,20 +182,11 @@
             <!-- End Page wrapper  -->
             <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
         <!-- End Wrapper -->
-        <!-- ============================================================== -->
-
-
-
-
-
 
         <script src="js/libs/jquery.min.js"></script>
         <script src="socket.io/socket.io.js"></script>
-
         <script src="js/socket-chat.js"></script>
         <script src="js/socket-custom.js"></script>
-
     </body>
 </html>
