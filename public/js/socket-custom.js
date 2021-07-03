@@ -18,6 +18,7 @@ socket.on('connect', function() {
     console.log('Conectado al servidor');
     socket.emit('enterChat', user, function(res) {
         console.log(res);
+        renderizarUsuarios(res);
     });
 });
 

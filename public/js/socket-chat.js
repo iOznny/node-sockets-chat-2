@@ -2,7 +2,7 @@ var params = new URLSearchParams(window.location.search);
 var name = params.get('name');
 var room = params.get('room');
 
-// referencias de jQuery
+// Referencias de jQuery
 var divUsuarios = $('#divUsuarios');
 var formEnviar = $('#formEnviar');
 var txtMensaje = $('#txtMensaje');
@@ -10,6 +10,7 @@ var divChatbox = $('#divChatbox');
 
 // Funciones para renderizar usuarios
 function renderizarUsuarios(persons) {
+    console.log(persons);
     var html = '';
 
     html += '<li>';
@@ -18,7 +19,7 @@ function renderizarUsuarios(persons) {
 
     for (var i=0; i<persons.length; i++) {
         html += '<li>';
-        html += '    <a data-id="' + persons[i].id + '"  href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>' + personas[i].name + ' <small class="text-success">online</small></span></a>';
+        html += '    <a data-id="' + persons[i].id + '"  href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>' + persons[i].name + ' <small class="text-success">online</small></span></a>';
         html += '</li>';
     }
 
@@ -94,7 +95,7 @@ formEnviar.on('submit', function(e) {
         return;
     }
 
-    socket.emit('crearMensaje', {
+    socket.emit('createMSG', {
         name: name,
         mensaje: txtMensaje.val()
     }, function(message) {
