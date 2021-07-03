@@ -27,7 +27,8 @@ socket.on('disconnect', function() {
 
 // Enviar mensajes
 socket.on('createMSG', function(message) {
-    console.log('Servidor:', message);
+    renderizarMensajes(message, false);
+    scrollBottom();
 });
 
 // Esuchar cambios de usuarios (entra o sale del chat)
